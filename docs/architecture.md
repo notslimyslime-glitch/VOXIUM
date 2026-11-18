@@ -62,3 +62,8 @@ This is a target structure, not a claim that the upstream projects already fit t
 The initial target is Android 15 with 4 GB RAM. Keep the shell lightweight, paginate catalogue results, avoid retaining large assets in memory, and release the previous engine process before starting another.
 
 Android scoped storage and upstream directory expectations must be audited before selecting final paths. Start with engine-owned data roots. A shared download staging area is acceptable only when ownership and final destination are explicit.
+
+
+## Detailed integration plan
+
+See the [VOXIUM integration blueprint](integration-blueprint.md) for the proposed module layout, engine-by-engine integration strategy, adapter boundary, storage/account isolation, session lifecycle, build sequence, and unresolved audit questions.
