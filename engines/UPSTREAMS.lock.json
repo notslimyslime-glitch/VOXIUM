@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "product": {
+    "name": "VOXIUM",
+    "version": "0.1.0-alpha",
+    "package": "com.voxium.launcher",
+    "integration_goal": "One Android application package containing three selectable game engines"
+  },
+  "engines": {
+    "java": {
+      "name": "ZalithLauncher2",
+      "repository": "https://github.com/ZalithLauncher/ZalithLauncher2",
+      "ref": "main",
+      "commit": "0986a018ce053662ecfcc1f48cffe339c8d391c2",
+      "license": "GPL-3.0",
+      "upstream_application_id": "com.movtery.zalithlauncher.v2",
+      "integration_notes": [
+        "Application module must be converted or refactored into an embeddable module.",
+        "Retain the required unofficial-fork branding and notice conditions.",
+        "Do not import upstream signing credentials or secrets.",
+        "Keep the Java runtime, LWJGL and native libraries with their required ABI packaging."
+      ]
+    },
+    "bedrock": {
+      "name": "LeviLauncher-Android",
+      "repository": "https://github.com/LiteLDev/LeviLauncher-Android",
+      "ref": "main",
+      "commit": "d544df8cafab731ba7686dfb88951602f13293ef",
+      "license": "Apache-2.0",
+      "upstream_application_id": "org.levimc.launcher",
+      "minimum_sdk": 28,
+      "abi": "arm64-v8a",
+      "integration_notes": [
+        "The app module must be refactored into an embeddable library or split into reusable core and UI modules.",
+        "Resolve manifest, Application, provider, service, activity and resource collisions.",
+        "Preserve native CMake components and ARM64 packaging.",
+        "Do not bundle proprietary Minecraft APKs or game assets."
+      ]
+    },
+    "starling": {
+      "name": "Starling",
+      "repository": "https://github.com/starling-client/starling",
+      "ref": "starling",
+      "commit": "5432370d573642041585c69b40fb045b27133488",
+      "license": "MIT",
+      "native_library": "horizon_android",
+      "abi": "arm64-v8a",
+      "integration_notes": [
+        "Build and package the Rust NativeActivity library and its JNI/Java support classes.",
+        "Merge the required activities, services, providers, permissions, metadata and resources into the VOXIUM manifest.",
+        "Preserve the player's own legally obtained Java Edition files workflow.",
+        "Do not assume Java Edition JVM mods are supported by this native Rust runtime."
+      ]
+    }
+  },
+  "policy": {
+    "one_game_session_at_a_time": true,
+    "separate_per_engine_data_roots": true,
+    "user_supplied_licensed_game_files_only": true,
+    "never_copy_upstream_signing_secrets": true
+  }
+}
