@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10131b"><title>VOXIUM | Launcher Prototype</title>
+<style>
+:root{color-scheme:dark;--bg:#10131b;--panel:#191f2b;--panel2:#202838;--line:#303b4e;--text:#f2f5fb;--muted:#9aa8bc;--accent:#8b7cff;--green:#71d6a2}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -20%,#30285b 0,transparent 42%),var(--bg);color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:22px max(18px,calc((100vw - 980px)/2));border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-weight:900;letter-spacing:3px;font-size:21px}.logo span{color:var(--accent)}.tag{color:var(--muted);font-size:12px}
+main{max-width:980px;margin:auto;padding:24px 18px 90px}.hero{padding:26px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(125deg,#242b3c,#171d29);margin-bottom:20px}
+.eyebrow{color:var(--green);font-size:11px;font-weight:800;letter-spacing:2px}.hero h1{font-size:clamp(28px,6vw,46px);margin:9px 0}.hero p{color:var(--muted);max-width:580px;line-height:1.6}
+.engines{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}.engine,.card,.stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}.engine b{display:block;margin:8px 0 4px}.engine small,.muted{color:var(--muted)}.engine.active{border-color:var(--accent);background:#24233c}
+.tabs{display:flex;gap:8px;overflow:auto;padding:5px 0 16px}.tab,button,select,input{font:inherit}.tab,button{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:11px;padding:10px 14px;cursor:pointer}.tab.active,button.primary{background:var(--accent);border-color:var(--accent);color:white}
+.panel{display:none}.panel.active{display:block}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 16px}.toolbar input,.toolbar select{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:11px;min-width:150px;flex:1}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.card h3{margin:5px 0 7px}.pill{display:inline-block;font-size:11px;padding:4px 8px;border-radius:30px;background:#302b50;color:#c9c2ff}.card p{color:var(--muted);line-height:1.5;font-size:13px}.card button{margin-top:8px}
+.notice{padding:13px 15px;border-radius:12px;background:#202b2a;border:1px solid #34564a;color:#bcebd3;margin:14px 0;font-size:13px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
+@media(max-width:650px){.engines{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.hero{padding:20px}header{padding:18px}}
+</style>
+</head>
+<body>
+<header><div class="logo">VOX<span>IUM</span></div><div class="tag">HYBRID LAUNCHER • UI PREVIEW</div></header>
+<main>
+<section class="hero">
+<div class="eyebrow">YOUR GAMES. ONE HOME.</div><h1>Choose your world.</h1>
+<p>A shared launcher shell for Java, Bedrock and native Starling. This preview tests navigation and catalogue UI using sample data. It does not install or launch Minecraft.</p>
+<div class="engines">
+<div class="engine active"><div>☕</div><b>Java Edition</b><small>Zalith / Pojav-based engine</small></div>
+<div class="engine"><div>🧱</div><b>Bedrock Edition</b><small>LeviLauncher integration</small></div>
+<div class="engine"><div>⚡</div><b>Starling</b><small>Native Rust runtime</small></div>
+</div>
+</section>
+<nav class="tabs" aria-label="Main navigation">
+<button class="tab active" data-tab="home">Home</button><button class="tab" data-tab="versions">Versions</button><button class="tab" data-tab="mods">Mod browser</button><button class="tab" data-tab="library">Library</button>
+</nav>
+<section id="home" class="panel active">
+<h2>Welcome back</h2><p class="muted">Your launcher dashboard, before the engines move in.</p>
+<div class="grid"><div class="stat"><div class="muted">Active engine</div><h2>Java</h2><small class="muted">Demo selection only</small></div><div class="stat"><div class="muted">Installed profiles</div><h2>0</h2><small class="muted">No game files touched</small></div></div>
+<div class="notice">Prototype mode: buttons and browsing are safe demos. Real installs and gameplay come after native integration.</div>
+</section>
+<section id="versions" class="panel"><h2>Version browser</h2><p class="muted">Sample version catalogue for layout testing.</p><div class="toolbar"><input id="versionSearch" placeholder="Search versions…"><select id="versionType"><option value="all">All types</option><option>Release</option><option>Snapshot</option><option>Old</option></select></div><div class="grid" id="versionList"></div></section>
+<section id="mods" class="panel"><h2>Mod browser</h2><p class="muted">Sample projects. Real Modrinth / CurseForge data is not connected yet.</p><div class="toolbar"><input id="modSearch" placeholder="Search mods…"><select id="modCategory"><option value="all">All categories</option><option>Performance</option><option>Utility</option><option>World</option></select></div><div class="grid" id="modList"></div></section>
+<section id="library" class="panel"><h2>Your library</h2><div class="notice">Nothing installed yet. This is a fresh prototype, not your device's game storage.</div></section>
+</main><footer>VOXIUM prototype • sample data • one active game session at a time</footer>
+<script>
+const versions=[
+{name:"1.21.10",type:"Release",desc:"Stable release profile for catalogue layout testing."},
+{name:"1.21.9",type:"Release",desc:"Previous release sample."},
+{name:"1.22 Snapshot",type:"Snapshot",desc:"Snapshot entry used to test labels and filtering."},
+{name:"1.20.1",type:"Release",desc:"Older release sample."},
+{name:"Beta 1.7.3",type:"Old",desc:"Historical version sample."},
+{name:"Alpha 1.2.6",type:"Old",desc:"Historical version sample."}
+];
+const mods=[
+{name:"Sodium",category:"Performance",desc:"Rendering-performance project sample. Compatibility depends on game version."},
+{name:"Lithium",category:"Performance",desc:"General game-logic optimisation project sample."},
+{name:"Xaero's Minimap",category:"Utility",desc:"Map and navigation project sample."},
+{name:"AppleSkin",category:"Utility",desc:"Food information interface project sample."},
+{name:"Biomes O' Plenty",category:"World",desc:"World-generation content project sample."},
+{name:"Waystones",category:"World",desc:"Travel utility project sample."}
+];
+function render(items,target,kind){document.getElementById(target).innerHTML=items.length?items.map(x=>'<article class="card"><span class="pill">'+x.typeOrCategory+'</span><h3>'+x.name+'</h3><p>'+x.desc+'</p><button type="button" onclick="demoAction(\''+kind+'\',\''+x.name.replaceAll("'","\\'")+'\')">View details</button></article>').join(""):'<p class="muted">No matching entries.</p>'}
+function drawVersions(){const q=document.getElementById('versionSearch').value.toLowerCase(),t=document.getElementById('versionType').value;render(versions.filter(x=>(t==='all'||x.type===t)&&x.name.toLowerCase().includes(q)).map(x=>({...x,typeOrCategory:x.type})),'versionList','version')}
+function drawMods(){const q=document.getElementById('modSearch').value.toLowerCase(),t=document.getElementById('modCategory').value;render(mods.filter(x=>(t==='all'||x.category===t)&&x.name.toLowerCase().includes(q)).map(x=>({...x,typeOrCategory:x.category})),'modList','mod')}
+function demoAction(kind,name){alert(name+'\n\nDemo only: real '+kind+' details and installation are not connected yet.')}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab,.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.tab).classList.add('active')}));
+['versionSearch','versionType'].forEach(id=>document.getElementById(id).addEventListener('input',drawVersions));
+['modSearch','modCategory'].forEach(id=>document.getElementById(id).addEventListener('input',drawMods));
+drawVersions();drawMods();
+</script></body></html>
