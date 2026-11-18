@@ -33,3 +33,9 @@ The browser prototype demonstrates space switching, sample version lists, conten
 The initial test device is a Redmi 13C 5G running Android 15 with 4 GB RAM. Use browser preview for UI/catalogue-flow testing and a physical Android device for native gameplay, graphics, storage, input, and engine startup. Heavy Android builds should use cloud CI where practical.
 
 See [Architecture](docs/architecture.md), [Integration blueprint](docs/integration-blueprint.md), and [Engine audit](docs/engine-audit.md).
+
+## Native Android app (first shell build)
+
+The repository now includes a real Android application module under `app/`. The first native shell provides Java, Bedrock, and Starling space switching, separate saved per-space preferences, and placeholder navigation for versions, content, library, accounts, and settings. It does not yet install or launch any game engine.
+
+A cloud debug build runs through [Android Debug Build](https://github.com/notslimyslime-glitch/VOXIUM/actions/workflows/android-debug.yml). When successful, download the `voxium-debug-apk` artifact from the workflow run and install it on a test device.
