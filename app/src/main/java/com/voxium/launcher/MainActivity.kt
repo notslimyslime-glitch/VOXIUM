@@ -7,6 +7,7 @@ import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.HorizontalScrollView
 import android.widget.ScrollView
 import android.widget.TextView
 
@@ -24,6 +25,9 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activeSpace = prefs.getString("active_space", "Java") ?: "Java"
+        window.statusBarColor = bg
+        window.navigationBarColor = bg
+        if (android.os.Build.VERSION.SDK_INT >= 29) window.isNavigationBarContrastEnforced = false
         render()
     }
 
@@ -46,9 +50,13 @@ class MainActivity : Activity() {
             val button = Button(this).apply {
                 text = caption
                 isAllCaps = false
-                textSize = 12f
+                textSize = 13f
+                minWidth = 0
+                minHeight = dp(78)
+                setPadding(dp(4), dp(8), dp(4), dp(8))
                 setTextColor(Color.WHITE)
                 background = rounded(if (activeSpace == space) 0xFF493B78.toInt() else panelColor)
+                stateListAnimator = null
                 setOnClickListener {
                     activeSpace = space
                     activeTab = "Home"
@@ -63,18 +71,30 @@ class MainActivity : Activity() {
 
         val tabs = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
         val tabNames = listOf("Home", "Versions", if (activeSpace == "Bedrock") "Add-ons" else "Mods", "Library", "Accounts", "Settings")
-        tabNames.forEach { tab ->
+        tabNames.forEachIndexed { index, tab ->
             val button = Button(this).apply {
                 text = tab
                 isAllCaps = false
-                textSize = 9f
+                textSize = 12f
+                minWidth = dp(76)
+                minHeight = dp(44)
+                setPadding(dp(14), 0, dp(14), 0)
                 setTextColor(Color.WHITE)
                 background = rounded(if (activeTab == tab) accent else panelColor)
+                stateListAnimator = null
                 setOnClickListener { activeTab = tab; render() }
             }
-            tabs.addView(button, LinearLayout.LayoutParams(0, dp(44), 1f).apply { marginEnd = dp(2) })
+            tabs.addView(button, LinearLayout.LayoutParams(-2, dp(46)).apply {
+                marginEnd = dp(7)
+                if (index == 0) marginStart = dp(1)
+            })
         }
-        root.addView(tabs)
+        val tabScroller = HorizontalScrollView(this).apply {
+            isHorizontalScrollBarEnabled = false
+            clipToPadding = false
+            addView(tabs)
+        }
+        root.addView(tabScroller)
         body = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(0, dp(16), 0, 0)
@@ -160,7 +180,10 @@ class MainActivity : Activity() {
             text = title
             isAllCaps = false
             setTextColor(Color.WHITE)
+            minHeight = dp(48)
+            setPadding(dp(16), dp(8), dp(16), dp(8))
             background = rounded(0xFF493B78.toInt())
+            stateListAnimator = null
             setOnClickListener { click() }
         }
         body.addView(button, LinearLayout.LayoutParams(-1, dp(46)).apply { topMargin = dp(6) })
