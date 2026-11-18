@@ -1,33 +1,35 @@
 # VOXIUM
 
-A hybrid Android game launcher project exploring integrations for Java Edition, Bedrock Edition, and Starling.
+**Three spaces. One launcher.** VOXIUM is a hybrid Android launcher concept that keeps Java Edition, Bedrock Edition, and Starling in separate, switchable spaces inside one app.
 
-## Project direction
+## Product direction
 
-- Reuse and integrate existing engines instead of rebuilding them.
-- VOXIUM owns the shared home screen, navigation, game library, downloads, and shared settings.
-- Keep engine-specific launch, account, and advanced settings flows with their respective engines where needed.
-- Run one game engine/session at a time.
-- Use a browser prototype for UI and catalogue-flow testing; validate native gameplay on a physical Android device.
+VOXIUM should feel like three launcher environments hosted by one lightweight shell:
 
-## Current status
+- **Java Space** — Java Edition versions, Java mods, profiles, and Java engine settings.
+- **Bedrock Space** — Bedrock versions, worlds, resource packs, add-ons, and Bedrock-specific settings.
+- **Starling Space** — the native Rust-based Starling runtime, its supported game version, data, and compatible content.
 
-This repository starts with the product architecture and a lightweight browser prototype. The prototype uses sample catalogue data and does not launch games or install real versions/mods.
+Each space has its own library, catalogue context, account connections, settings, and game-data boundary. Shared navigation and app appearance can live in the VOXIUM shell, but engine-specific authentication and launch flows remain with their engines where required.
+
+Only one game session runs at a time. Switching spaces changes the active launcher environment; it does not merge game files or guarantee that every engine supports the same versions or content.
 
 ## Browser prototype
 
-Open `prototype/index.html` in a browser, or enable GitHub Pages for the `/prototype` folder to preview it online.
+**[Open the VOXIUM UI preview](https://notslimyslime-glitch.github.io/VOXIUM/prototype/)**
 
-## Planned engine integrations
+The browser prototype demonstrates space switching, sample version lists, content browsing, library/settings screens, and an account entry point. Its catalogues are sample data: it does not sign in, install games, or launch engines.
 
-| Engine | Role | Important constraint |
+## Engine integration plan
+
+| Space | Existing project | Important constraint |
 |---|---|---|
-| ZalithLauncher2 / Pojav-based core | Java Edition | JVM-based; supported versions depend on runtime and upstream compatibility |
-| LeviLauncher-Android | Bedrock Edition | Requires a legitimate compatible Bedrock installation/account |
-| Starling | Native Rust implementation | Currently targets a specific Java Edition release; not a general JVM replacement |
+| Java | [ZalithLauncher2](https://github.com/ZalithLauncher/ZalithLauncher2) / Pojav-derived core | JVM-based; compatibility depends on runtime, version, loader, and device |
+| Bedrock | [LeviLauncher-Android](https://github.com/LiteLDev/LeviLauncher-Android) | Requires a legitimate compatible Bedrock installation and account |
+| Starling | [Starling](https://github.com/starling-client/starling) | Native Rust implementation for a specific Java Edition release, not a general JVM replacement |
 
-## Development notes
+## Development
 
-The target development device is a Redmi 13C 5G on Android 15 with 4 GB RAM. Heavy Android builds should run in cloud CI rather than locally on the phone. Test actual gameplay on-device; browser preview cannot validate native graphics, storage, input, or engine startup.
+The initial test device is a Redmi 13C 5G running Android 15 with 4 GB RAM. Use browser preview for UI/catalogue-flow testing and a physical Android device for native gameplay, graphics, storage, input, and engine startup. Heavy Android builds should use cloud CI where practical.
 
 See [Architecture](docs/architecture.md) and [Engine audit](docs/engine-audit.md).
