@@ -32,4 +32,4 @@ The browser prototype demonstrates space switching, sample version lists, conten
 
 The initial test device is a Redmi 13C 5G running Android 15 with 4 GB RAM. Use browser preview for UI/catalogue-flow testing and a physical Android device for native gameplay, graphics, storage, input, and engine startup. Heavy Android builds should use cloud CI where practical.
 
-See [Architecture](docs/architecture.md) and [Engine audit](docs/engine-audit.md).
+See [Architecture](docs/architecture.md), [Integration blueprint](docs/integration-blueprint.md), and [Engine audit](docs/engine-audit.md).
